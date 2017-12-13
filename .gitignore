@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+.vscode/
+demo1-uplad/node_modules/
+node_modules/
+npm-debug.log
