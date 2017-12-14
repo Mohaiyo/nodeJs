@@ -4,7 +4,7 @@ demo1 -- node入门全书上传文件实例demo  [地址]https://www.nodebeginne
 
 __注：此项目纯属个人练手代码。__
 
-# 项目运行
+# 项目运行demo1
 
 ```
 git clone https://github.com/Mohaiyo/nodeJs.git 
@@ -18,6 +18,15 @@ npm install
 终端运行demo1
 
 node index.js
+
+```
+
+# demo2 node--Api
+
+```
+
+cd demo2-nodeApi
+
 
 ```
 
