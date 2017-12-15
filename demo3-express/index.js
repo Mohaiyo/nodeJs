@@ -93,6 +93,32 @@ app.post('/file_upload', function(req, res) {
     })
 })
 
+app.get('/listUsers', function(req, res) {
+    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+        console.log(data)
+        res.end(data)
+    })
+})
+
+let user = {
+    'user4': {
+        'name': 'mohit',
+        'password': 'password4',
+        'profession': 'teacher',
+        'id': 4
+    }
+}
+
+app.get('/addUser', function(req, res) {
+    // 读取已存在的数据
+    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+        data = JSON.parse(data)
+        data['user4'] = user['user4']
+        console.log(data)
+        res.end(JSON.stringify(data))
+    })
+})
+
 let server = app.listen(8081, () => {
     let host = server.address().address
     let port = server.address().port
