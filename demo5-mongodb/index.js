@@ -1,26 +1,38 @@
-let MongoClient = require('mongodb').MongoClient
-let DB_CONN_STR = 'mongodb://localhost:27017/nodejs'
+const MongoClient = require('mongodb').MongoClient
+const assert = require('assert')
 
-let insertData = (db, callback) => {
+// Connection URL
+const url = 'mongodb://localhost:27017'
 
-    // 链接到表site
-    // let collection = db.collection('nodejs')
+// Database Name
+const dbName = 'test1'
 
-    // 插入数据
-    let data = [{ 'name': 'nodejs教程', 'url': 'www.nodejs.com' }, { 'name': 'nodejs工具', 'url': 'www.nodejstool.com' }]
-    collection.insert(data, (err, result) => {
-        if (err) {
-            console.log('Error' + err)
-            return
-        }
-        callback(result)
+const insertDocuments = function(db, callback) {
+        // Get the documents collection
+        const collection = db.collection('documents')
+            // Insert some documents
+        collection.insertMany([
+            { a: 1 }, { a: 2 }, { a: 3 }
+        ], function(err, result) {
+            assert.equal(err, null)
+            assert.equal(3, result.result.n)
+            assert.equal(3, result.ops.length)
+            console.log('Inserted 3 documents into the collection')
+            callback(result)
+        })
+    }
+    // Use connect method to connect to the server
+MongoClient.connect(url, function(err, client) {
+    assert.equal(null, err)
+    console.log('Connected successfully to server')
+
+    const db = client.db(dbName)
+
+    insertDocuments(db, function() {
+        client.close()
     })
-}
 
-MongoClient.connect(DB_CONN_STR, (err, db) => {
-    console.log('mongodb数据库连接成功！')
-    insertData(db, (result) => {
-        console.log(result)
-        db.close()
-    })
+    client.close()
 })
+
+// mongodb CRUD详见https://github.com/mongodb/node-mongodb-native
